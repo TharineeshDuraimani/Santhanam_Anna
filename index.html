@@ -7,270 +7,140 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">🚗 Insurance Survey</div>
 
   <div class="nav-links">
     <button onclick="showHome()">Home</button>
     <button onclick="openModule('initial')">Initial Report</button>
-    <button onclick="alert('Documentation module')">Documentation</button>
-    <button onclick="alert('Claims module')">Claims</button>
-    <button onclick="alert('Reports module')">Reports</button>
+    <button onclick="alert('Documentation module coming soon!')">Documentation</button>
+    <button onclick="alert('Claims module coming soon!')">Claims</button>
+    <button onclick="alert('Reports module coming soon!')">Reports</button>
   </div>
 </nav>
 
-<!-- HOME DASHBOARD -->
-<div id="home" class="home">
+<div class="main-container">
 
-  <h2>Dashboard Overview</h2>
-
-  <div class="stats">
-
-    <div class="stat-card">
-      <h3 id="totalVehicles">0</h3>
-      <p>Total Vehicles Reported</p>
+  <div id="home" class="home">
+    <h2>Dashboard Overview</h2>
+    <div class="stats">
+      <div class="stat-card">
+        <h3 id="totalVehicles">0</h3>
+        <p>Total Vehicles Reported</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="completedReports">0</h3>
+        <p>Reports Completed</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="pendingReports">0</h3>
+        <p>Reports Pending</p>
+      </div>
     </div>
-
-    <div class="stat-card">
-      <h3 id="completedReports">0</h3>
-      <p>Reports Completed</p>
-    </div>
-
-    <div class="stat-card">
-      <h3 id="pendingReports">0</h3>
-      <p>Reports Pending</p>
-    </div>
-
   </div>
 
-</div>
+  <div id="initialReport" class="hidden">
+    <h2>Initial Vehicle Report</h2>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p class="progress-text" id="progressText">Completion: 0%</p>
 
-<!-- INITIAL REPORT -->
-<div id="initialReport" class="hidden">
+    <div id="step1" class="step">
+      <h3>Upload Images</h3>
+      <input type="file" multiple onchange="previewImages()" />
+      <div id="preview"></div>
+    </div>
 
-  <h2>Initial Vehicle Report</h2>
-  <div class="progress-container">
-  <div class="progress-bar" id="progressBar"></div>
-</div>
+    <div id="step2" class="step hidden">
+      <h3>Claim & Survey Details</h3>
+      <div class="form-grid">
+        <input id="reportDate" type="text" placeholder="Date of Report" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" />
+        <input id="insuranceCompany" placeholder="Insurance Company Name" />
 
-<p class="progress-text" id="progressText">Completion: 0%</p>
+        <input id="insuredAddress" placeholder="Insured Address" />
 
-  <div id="step1" class="step">
-    <h3>Upload Images</h3>
-    <input type="file" multiple onchange="previewImages()" />
-    <div id="preview"></div>
-  </div>
+        <input id="vehicleLocation" placeholder="Survey Location" />
 
- <div id="step2" class="step hidden">
-  <h3>Claim & Survey Details</h3>
+        <input id="workshopAddress" placeholder="Workshop Address" />
 
-  <input id="surveyNo" placeholder="Survey Report No" />
-  <input id="insured" placeholder="Insured Name" />
-  <input id="reg" placeholder="Registration No" />
-  <input id="lossDate" type="date" placeholder="Date of Loss" />
+        <input id="vehicleMakeModel" placeholder="Vehicle Make & Model" />
 
-  <input id="claim" placeholder="Claim No" />
-  <input id="policy" placeholder="Policy No" />
+        <input id="contactPerson" placeholder="Contact Person" />
 
-  <input id="surveyAppt" type="date" placeholder="Survey Appointment Date" />
-  <input id="surveyConducted" type="date" placeholder="Survey Conducted Date" />
-
-  <input id="garage" placeholder="Garage / Workshop Name & Location" />
-
-  <textarea id="damage" placeholder="Damage Details"></textarea>
-</div>
+        <input id="contactNumber" placeholder="Contact Number" />
+        <input id="surveyNo" placeholder="Survey Report No" />
+        <input id="insured" placeholder="Insured Name" />
+        <input id="reg" placeholder="Registration No" />
+        <input id="lossDate" type="text" placeholder="Date of Loss" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'"/>
+        <input id="claim" placeholder="Claim No" />
+        <input id="policy" placeholder="Policy No" />
+        <input id="surveyAppt" type="text" placeholder="Survey Appointment Date" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" />
+        <input id="surveyConducted" type="text" placeholder="Survey Conducted Date" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" />
+        <input id="garage" placeholder="Garage / Workshop Name & Location" />
+      </div>
+      <textarea id="damage" placeholder="Damage Details" rows="4"></textarea>
+      <textarea id="surveyObservation" rows="4" placeholder="Survey Observation"></textarea>
+      <textarea id="pendingDocuments" rows="4" placeholder="Pending Documents / Deficiencies"></textarea>
+    </div>
 
 <div id="step3" class="step hidden">
-  <h3>List of Documents</h3>
+  <h3>List of Documents Verified</h3>
 
   <div class="doc-section">
 
+    <!-- PROVIDED DOCUMENTS -->
     <div class="doc-box">
-      <h4>Documents Status</h4>
+      <h4>Provided Documents</h4>
+      <div id="providedDocs"></div>
+    </div>
 
-      <label class="doc-item">
-        <input type="checkbox" value="Intimation Letter">
-        Intimation Letter
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Claim Form">
-        Claim Form
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Estimate">
-        Estimate
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Supplementary Estimate">
-        Supplementary Estimate
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Insurance Policy">
-        Insurance Policy
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="RC">
-        RC Copy
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="DL">
-        DL Copy
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Driver Statement">
-        Driver Statement
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Owner Statement">
-        Owner Statement
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Spot Photos">
-        Spot Photos
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="FIR">
-        FIR / GD Entry
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="CFX">
-        CFX / MVI Report
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Repair Bills">
-        Repair Bills & Receipts
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Towing Bill">
-        Towing Bill
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Discharge Voucher">
-        Discharge / Satisfaction Voucher
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Cancelled Cheque">
-        Cancelled Cheque Leaf
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="KYC">
-        Insured KYC
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Spot Report">
-        Spot Report
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Tax Card">
-        Tax Card
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Permit">
-        Permit
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Fitness Certificate">
-        Fitness Certificate
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Trip Sheet">
-        Trip Sheet / Load Challan
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="RC Extract">
-        RC Extract
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="DL Extract">
-        DL Extract
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Permit Extract">
-        Permit Extract
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Purchase Invoice">
-        Purchase Invoice
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Today's Invoice">
-        Today's Invoice
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Consent Letter">
-        Consent Letter
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Section 64 VB Compliance">
-        Section 64 VB Compliance
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Investigation Report">
-        Investigation Report
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="Affidavit">
-        Affidavit
-      </label>
-
-      <label class="doc-item">
-        <input type="checkbox" value="NOC Financier">
-        NOC from Financier
-      </label>
-
+    <!-- REQUIRED DOCUMENTS -->
+    <div class="doc-box">
+      <h4>Required Documents</h4>
+      <div id="requiredDocs"></div>
     </div>
 
   </div>
 </div>
 
-  <div id="step4" class="step hidden">
-    <h3>Remarks</h3>
-    <textarea id="remarks"></textarea>
-  </div>
+<div id="step4" class="step hidden">
+  <h3>Remarks & Instructions</h3>
 
-  <div id="step5" class="step hidden">
-    <h3>Report</h3>
-    <button onclick="generateReport()">Generate Report</button>
-    <pre id="report"></pre>
-  </div>
+  <textarea
+    id="remarks"
+    rows="4"
+    placeholder="Surveyor Remarks">
+  </textarea>
 
-  <div class="nav">
-    <button onclick="prevStep()">Previous</button>
-    <button onclick="nextStep()">Next</button>
-    <button onclick="showHome()">Back to Home</button>
-  </div>
+  <textarea
+    id="invoiceInstruction"
+    rows="4"
+    placeholder="Invoice Instruction to Garage">
+  </textarea>
 
+  <textarea
+    id="specialNotes"
+    rows="4"
+    placeholder="Special Notes">
+  </textarea>
+
+</div>
+
+    <div id="step5" class="step hidden">
+      <h3>Generated Report Summary</h3>
+      <button class="action-btn" onclick="generateReport()">Generate Report Preview</button>
+      <pre id="report" class="report-box"></pre>
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="prevStep()">Previous</button>
+      <button onclick="nextStep()">Next</button>
+      <button class="alt-btn" onclick="showHome()">Back to Home</button>
+    </div>
+
+  </div>
 </div>
 
 <script src="script.js"></script>
