@@ -8,16 +8,61 @@
 <body>
 
 <nav class="navbar">
-  <div class="logo">🚗 Insurance Survey</div>
 
-  <div class="nav-links">
-    <button onclick="showHome()">Home</button>
-    <button onclick="openModule('initial')">Initial Report</button>
-    <button onclick="alert('Documentation module coming soon!')">Documentation</button>
-    <button onclick="alert('Claims module coming soon!')">Claims</button>
-    <button onclick="alert('Reports module coming soon!')">Reports</button>
-  </div>
+    <div class="nav-left">
+
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div class="logo">
+            Insurance Survey Dashboard
+        </div>
+
+    </div>
+
+    <div class="nav-links desktop-menu">
+        <button onclick="showHome()">Dashboard</button>
+        <button onclick="openModule('initial')">Initial Report</button>
+        <button>Documentation</button>
+        <button>Final Report</button>
+    </div>
+
 </nav>
+
+<!-- MOBILE SIDEBAR -->
+
+<div id="sidebar" class="sidebar">
+
+    <div class="sidebar-header">
+
+        <span>Menu</span>
+
+        <button onclick="toggleSidebar()">✕</button>
+
+    </div>
+
+    <button onclick="showHome()">Dashboard</button>
+
+    <button onclick="openModule('initial')">
+        Initial Report
+    </button>
+
+    <button>
+        Documentation
+    </button>
+
+    <button>
+        Final Report
+    </button>
+
+</div>
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+    onclick="toggleSidebar()">
+</div>
 
 <div class="main-container">
 
