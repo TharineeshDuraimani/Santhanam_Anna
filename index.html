@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Insurance Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -115,7 +115,7 @@
 
         <input id="contactPerson" placeholder="Contact Person" />
 
-        <input id="contactNumber" placeholder="Contact Number" />
+        <input id="contactNumber" type="number" placeholder="Contact Number" />
         <input id="surveyNo" placeholder="Survey Report No" />
         <input id="insured" placeholder="Insured Name" />
         <input id="reg" placeholder="Registration No" />
@@ -153,7 +153,8 @@
 
 <div id="step4" class="step hidden">
   <h3>Remarks & Instructions</h3>
-
+  <h5>* Kindly produce the above listed pending documents</h2>
+  <h5 style="padding-bottom: 10px;">*	The work approval will be given on the receipt of complete documents and scrutiny.</h2>
   <textarea
     id="remarks"
     rows="4"
@@ -176,7 +177,18 @@
 
     <div id="step5" class="step hidden">
       <h3>Generated Report Summary</h3>
-      <button class="action-btn" onclick="generateReport()">Generate Report Preview</button>
+      <div style="display:flex;gap:10px;margin-bottom:15px;">
+    <button class="action-btn" onclick="generateReport()">
+        Generate Report Preview
+    </button>
+
+    <button
+        id="copyBtn"
+        class="action-btn alt-btn"
+        onclick="copyReport()">
+        Copy Report
+    </button>
+</div>
       <pre id="report" class="report-box"></pre>
     </div>
 
