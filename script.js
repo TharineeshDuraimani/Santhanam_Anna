@@ -352,3 +352,29 @@ window.onload = function () {
 
     console.log("Insurance Dashboard Loaded");
 };
+function copyReport() {
+
+    const reportText =
+        document.getElementById("report").textContent;
+
+    if (!reportText.trim()) {
+
+        alert("Generate the report first.");
+
+        return;
+    }
+
+    navigator.clipboard.writeText(reportText);
+
+    const btn =
+        document.getElementById("copyBtn");
+
+    btn.textContent = "Copied ✓";
+
+    setTimeout(() => {
+
+        btn.textContent =
+            "Copy Report";
+
+    }, 2000);
+}
