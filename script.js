@@ -378,3 +378,192 @@ function copyReport() {
 
     }, 2000);
 }
+let generatedPdfBytes = null;
+
+async function buildSurveyPDF() {
+
+    try {
+
+        const existingPdfBytes =
+            await fetch("report-template-form.pdf")
+            .then(res => res.arrayBuffer());
+
+        const pdfDoc =
+            await PDFLib.PDFDocument.load(
+                existingPdfBytes
+            );
+
+        const form =
+            pdfDoc.getForm();
+
+        /* PAGE 1 */
+
+        form.getTextField("rep_no")
+            .setText(
+                document.getElementById("surveyNo").value || ""
+            );
+
+        form.getTextField("date")
+            .setText(
+                document.getElementById("reportDate").value || ""
+            );
+
+        form.getTextField("insured")
+            .setText(
+                document.getElementById("insured").value || ""
+            );
+
+        form.getTextField("reg_no")
+            .setText(
+                document.getElementById("reg").value || ""
+            );
+
+        form.getTextField("loss_date")
+            .setText(
+                document.getElementById("lossDate").value || ""
+            );
+
+        form.getTextField("claim_no")
+            .setText(
+                document.getElementById("claim").value || ""
+            );
+
+        form.getTextField("policy_no")
+            .setText(
+                document.getElementById("policy").value || ""
+            );
+
+        form.getTextField("survey_appt")
+            .setText(
+                document.getElementById("surveyAppt").value || ""
+            );
+
+        form.getTextField("survey_conducted")
+            .setText(
+                document.getElementById("surveyConducted").value || ""
+            );
+
+        form.getTextField("survey_date")
+            .setText(
+                document.getElementById("surveyConducted").value || ""
+            );
+
+        form.getTextField("garage_name")
+            .setText(
+                document.getElementById("garage").value || ""
+            );
+
+        /* PAGE 2 */
+
+        form.getTextField("invoice_1")
+            .setText(
+                document.getElementById("remarks").value || ""
+            );
+
+        form.getTextField("invoice_2")
+            .setText(
+                document.getElementById("invoiceInstruction").value || ""
+            );
+
+        form.getTextField("invoice_3")
+            .setText(
+                document.getElementById("specialNotes").value || ""
+            );
+
+        generatedPdfBytes =
+            await pdfDoc.save();
+
+        return generatedPdfBytes;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "PDF Error:\n\n" +
+            error.message
+        );
+
+        throw error;
+    }
+}
+async function generatePDFPreview() {
+
+    try {
+
+        const pdfBytes =
+            await buildSurveyPDF();
+
+        const blob =
+            new Blob(
+                [pdfBytes],
+                {
+                    type: "application/pdf"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        document
+            .getElementById("pdfSection")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("pdfViewer")
+            .src = url;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+    }
+}
+async function downloadSurveyPDF() {
+
+    try {
+
+        const pdfBytes =
+            generatedPdfBytes ||
+            await buildSurveyPDF();
+
+        const blob =
+            new Blob(
+                [pdfBytes],
+                {
+                    type: "application/pdf"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const a =
+            document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+            `Survey_Report_${
+                document.getElementById("reg").value || "Report"
+            }.pdf`;
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
+
+        URL.revokeObjectURL(url);
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+}
