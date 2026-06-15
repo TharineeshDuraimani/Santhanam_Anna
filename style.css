@@ -678,3 +678,84 @@ SMALL PHONES
         width: 240px;
     }
 }
+/* ===================================
+PDF PREVIEW MOBILE RESPONSIVE
+=================================== */
+
+.pdf-actions{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.pdf-actions button{
+    flex:1;
+    min-width:180px;
+}
+
+#pdfSection{
+    margin-top:20px;
+    width:100%;
+}
+
+#pdfSection h3{
+    margin-bottom:15px;
+}
+
+#pdfViewer{
+    width:100%;
+    height:900px;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    background:white;
+}
+
+/* Tablet */
+
+@media (max-width:992px){
+
+    #pdfViewer{
+        height:700px;
+    }
+
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+    .pdf-actions{
+        flex-direction:column;
+    }
+
+    .pdf-actions button{
+        width:100%;
+        min-width:unset;
+    }
+
+    #pdfViewer{
+        height:550px;
+    }
+
+    .report-box{
+        max-height:400px;
+        overflow:auto;
+    }
+
+}
+
+/* Small Phones */
+
+@media (max-width:480px){
+
+    #pdfViewer{
+        height:420px;
+    }
+
+    .action-btn,
+    .alt-btn{
+        width:100%;
+    }
+
+}
