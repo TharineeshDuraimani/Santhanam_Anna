@@ -567,3 +567,98 @@ async function downloadSurveyPDF() {
 
     }
 }
+function updateFileCount(){
+
+    const files =
+        document.getElementById(
+            "imageUpload"
+        ).files;
+
+    document.getElementById(
+        "fileUploadText"
+    ).textContent =
+        files.length > 0
+        ? `${files.length} Images Selected`
+        : "📷 Upload Vehicle Images";
+}
+function clearInitialReport() {
+
+    if (!confirm("Clear all report data?")) {
+        return;
+    }
+
+    /* Clear all inputs */
+    document.querySelectorAll(
+        "#initialReport input, #initialReport textarea, #initialReport select"
+    ).forEach(field => {
+
+        if (
+            field.type === "checkbox" ||
+            field.type === "radio"
+        ) {
+            field.checked = false;
+        } else {
+            field.value = "";
+        }
+
+    });
+
+    /* Clear uploaded images preview */
+    document.getElementById("preview").innerHTML = "";
+
+    const imageInput =
+        document.querySelector(
+            '#step1 input[type="file"]'
+        );
+
+    if (imageInput) {
+        imageInput.value = "";
+    }
+
+    /* Clear generated report */
+    const report =
+        document.getElementById("report");
+
+    if (report) {
+        report.textContent = "";
+    }
+
+    /* Hide PDF preview */
+    const pdfSection =
+        document.getElementById("pdfSection");
+
+    if (pdfSection) {
+        pdfSection.classList.add("hidden");
+    }
+
+    const pdfViewer =
+        document.getElementById("pdfViewer");
+
+    if (pdfViewer) {
+        pdfViewer.src = "";
+    }
+
+    /* Reset progress */
+    const progressBar =
+        document.getElementById("progressBar");
+
+    const progressText =
+        document.getElementById("progressText");
+
+    if (progressBar) {
+        progressBar.style.width = "0%";
+    }
+
+    if (progressText) {
+        progressText.textContent =
+            "Completion: 0%";
+    }
+
+    /* Uncheck document checkboxes */
+    document.querySelectorAll(
+        "#providedDocs input[type='checkbox'], #requiredDocs input[type='checkbox']"
+    ).forEach(cb => cb.checked = false);
+
+    alert("Report cleared successfully.");
+
+}
