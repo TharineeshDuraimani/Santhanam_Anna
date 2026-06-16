@@ -679,83 +679,56 @@ SMALL PHONES
     }
 }
 /* ===================================
-PDF PREVIEW MOBILE RESPONSIVE
+CUSTOM FILE UPLOAD
 =================================== */
 
-.pdf-actions{
-    display:flex;
+.file-upload{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
     gap:10px;
-    margin-bottom:15px;
-    flex-wrap:wrap;
-}
 
-.pdf-actions button{
-    flex:1;
-    min-width:180px;
-}
+    padding:14px 24px;
 
-#pdfSection{
-    margin-top:20px;
-    width:100%;
-}
-
-#pdfSection h3{
-    margin-bottom:15px;
-}
-
-#pdfViewer{
-    width:100%;
-    height:900px;
+    background:rgba(255,255,255,0.04);
     border:1px solid rgba(255,255,255,0.08);
+
     border-radius:12px;
-    background:white;
+
+    color:#ffffff;
+    font-weight:600;
+    font-size:14px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    transition:all .3s ease;
+
+    min-height:54px;
 }
 
-/* Tablet */
+.file-upload:hover{
+    background:rgba(255,255,255,0.08);
+    border-color:rgba(255,255,255,0.2);
 
-@media (max-width:992px){
+    transform:translateY(-2px);
 
-    #pdfViewer{
-        height:700px;
-    }
-
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.25),
+        0 0 20px rgba(255,255,255,.05);
 }
 
-/* Mobile */
-
-@media (max-width:768px){
-
-    .pdf-actions{
-        flex-direction:column;
-    }
-
-    .pdf-actions button{
-        width:100%;
-        min-width:unset;
-    }
-
-    #pdfViewer{
-        height:550px;
-    }
-
-    .report-box{
-        max-height:400px;
-        overflow:auto;
-    }
-
+.file-upload:active{
+    transform:translateY(0);
 }
 
-/* Small Phones */
+.file-upload span{
+    pointer-events:none;
+    letter-spacing:.3px;
+}
 
-@media (max-width:480px){
-
-    #pdfViewer{
-        height:420px;
-    }
-
-    .action-btn,
-    .alt-btn{
-        width:100%;
-    }
-
+.file-upload input[type="file"]{
+    display:none;
 }
