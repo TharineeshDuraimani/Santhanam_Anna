@@ -396,79 +396,155 @@ async function buildSurveyPDF() {
         const form =
             pdfDoc.getForm();
 
+        /* =========================
+           PDF CHECKLIST MAPPING
+        ========================= */
+
+        const documentMap = {
+
+            "Intimation Letter":"doc_1",
+            "Claim Form":"doc_2",
+            "Estimate":"doc_3",
+            "Supplementary Estimate":"doc_4",
+            "Insurance Policy":"doc_5",
+            "RC Copy":"doc_6",
+            "DL Copy":"doc_7",
+            "Driver Statement":"doc_8",
+            "Owner Statement":"doc_9",
+            "Spot Photos":"doc_10",
+            "FIR / GD Entry":"doc_11",
+            "CFX / MVI Report":"doc_12",
+            "Repair Bills & Receipts":"doc_13",
+            "Towing Bill":"doc_14",
+            "Discharge / Satisfaction Voucher":"doc_15",
+            "Cancelled Cheque Leaf":"doc_16",
+            "Insured KYC":"doc_17",
+            "Spot Report":"doc_18",
+            "Tax Card":"doc_19",
+            "Permit":"doc_20",
+            "Fitness Certificate":"doc_21",
+            "Trip Sheet / Load Challan":"doc_22",
+            "RC Extract":"doc_23",
+            "DL Extract":"doc_24",
+            "Permit Extract":"doc_25",
+            "Purchase Invoice":"doc_26",
+            "Today's Invoice":"doc_27",
+            "Consent Letter":"doc_28",
+            "Section 64 VB Compliance":"doc_29",
+            "Investigation Report":"doc_30",
+            "Affidavit":"doc_31",
+            "NOC from Financier":"doc_32"
+
+        };
+
         /* PAGE 1 */
 
         form.getTextField("rep_no")
             .setText(
-                document.getElementById("surveyNo").value || ""
+                document.getElementById("surveyNo")?.value || ""
             );
 
         form.getTextField("date")
             .setText(
-                document.getElementById("reportDate").value || ""
+                document.getElementById("reportDate")?.value || ""
             );
 
         form.getTextField("insured")
             .setText(
-                document.getElementById("insured").value || ""
+                document.getElementById("insured")?.value || ""
             );
 
         form.getTextField("reg_no")
             .setText(
-                document.getElementById("reg").value || ""
+                document.getElementById("reg")?.value || ""
             );
 
         form.getTextField("loss_date")
             .setText(
-                document.getElementById("lossDate").value || ""
+                document.getElementById("lossDate")?.value || ""
             );
 
         form.getTextField("claim_no")
             .setText(
-                document.getElementById("claim").value || ""
+                document.getElementById("claim")?.value || ""
             );
 
         form.getTextField("policy_no")
             .setText(
-                document.getElementById("policy").value || ""
+                document.getElementById("policy")?.value || ""
             );
 
         form.getTextField("survey_appt")
             .setText(
-                document.getElementById("surveyAppt").value || ""
+                document.getElementById("surveyAppt")?.value || ""
             );
 
         form.getTextField("survey_conducted")
             .setText(
-                document.getElementById("surveyConducted").value || ""
+                document.getElementById("surveyConducted")?.value || ""
             );
 
         form.getTextField("survey_date")
             .setText(
-                document.getElementById("surveyConducted").value || ""
+                document.getElementById("surveyConducted")?.value || ""
             );
 
         form.getTextField("garage_name")
             .setText(
-                document.getElementById("garage").value || ""
+                document.getElementById("garage")?.value || ""
             );
 
         /* PAGE 2 */
 
         form.getTextField("invoice_1")
             .setText(
-                document.getElementById("remarks").value || ""
+                document.getElementById("remarks")?.value || ""
             );
 
         form.getTextField("invoice_2")
             .setText(
-                document.getElementById("invoiceInstruction").value || ""
+                document.getElementById("invoiceInstruction")?.value || ""
             );
 
         form.getTextField("invoice_3")
             .setText(
-                document.getElementById("specialNotes").value || ""
+                document.getElementById("specialNotes")?.value || ""
             );
+
+        /* =========================
+           PDF CHECKBOXES
+        ========================= */
+
+        document
+        .querySelectorAll(
+            ".provided-document:checked, .required-document:checked"
+        )
+        .forEach(cb => {
+
+            const fieldName =
+                documentMap[cb.value];
+
+            if(fieldName){
+
+                try{
+
+                    form
+                    .getCheckBox(fieldName)
+                    .check();
+
+                }
+                catch(error){
+
+                    console.log(
+                        "Missing PDF checkbox:",
+                        fieldName
+                    );
+
+                }
+
+            }
+
+        });
 
         generatedPdfBytes =
             await pdfDoc.save();
