@@ -55,20 +55,52 @@ function closeSidebar() {
 
 function openModule(module) {
 
-    if (module === "initial") {
+    document
+    .getElementById("home")
+    .classList.add("hidden");
 
-        document.getElementById("home").classList.add("hidden");
-        document.getElementById("initialReport").classList.remove("hidden");
+    document
+    .getElementById("initialReport")
+    .classList.add("hidden");
+
+    document
+    .getElementById("historyModule")
+    .classList.add("hidden");
+
+    if(module === "initial"){
+
+        document
+        .getElementById("initialReport")
+        .classList.remove("hidden");
 
         showStep(1);
-        closeSidebar();
+
     }
+
+    if(module === "history"){
+
+        document
+        .getElementById("historyModule")
+        .classList.remove("hidden");
+
+    }
+
+    closeSidebar();
 }
 
 function showHome() {
 
-    document.getElementById("home").classList.remove("hidden");
-    document.getElementById("initialReport").classList.add("hidden");
+    document
+    .getElementById("home")
+    .classList.remove("hidden");
+
+    document
+    .getElementById("initialReport")
+    .classList.add("hidden");
+
+    document
+    .getElementById("historyModule")
+    .classList.add("hidden");
 
     closeSidebar();
 }
